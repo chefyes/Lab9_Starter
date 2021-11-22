@@ -102,7 +102,131 @@
 
     // Start your code here
     // You may move this JS to another file if you wish
+    errorBtns.forEach(btn => {
+      btn.addEventListener('click', function() {
+        let output = document.querySelector('output');
+        let firstNum = document.querySelector('#first-num').value;
+        let secondNum = document.querySelector('#second-num').value;
+        let operator = document.querySelector('#operator').value;
+        if (btn.textContent == 'Console Log') {
+          if (output.value == '') {
+            console.log('Output: ' + output.value);
+          }
+          else {
+            console.log('Output: ' + firstNum + ' ' + operator + ' ' + secondNum + ' = ' + output.value);
+          }
+        }
+        if (btn.textContent == 'Console Error') {
+          if (output.value == '') {
+            console.error('Error: Need to Press \'Calculate\'');
+          }
+          else if (operator == '/') {
+            try {
+              let quotient = firstNum / secondNum;
+              if (secondNum == 0) {
+                throw DivideByZeroError;
+              }
+            } catch (err) {
+              console.log('Could not divide');
+            } finally {
+              console.log('Finally');
+            }
+          }
+          else {
+            console.error('No error');
+          }
+        }
+        if (btn.textContent == 'Console Count') {
+          console.count('Output = ' + output.value);
+        }
+        if (btn.textContent == 'Console Warn') {
+          if (firstNum == '' || secondNum == '') {
+            console.warn('Missing a value');
+          }
+          else {
+            console.warn('No warnings');
+          }
+        }
+        if (btn.textContent == 'Console Assert') {
+          let sum = firstNum + secondNum;
+          let expected = output.value;
+          let reason = 'First number + Second number expected to be Output';
+          console.assert(sum == expected, {sum, expected, reason});
+        }
+        if (btn.textContent == 'Console Clear') {
+          document.querySelector('#first-num').value = ''
+          document.querySelector('#second-num').value = ''
+          document.querySelector('output').value = ''
+          console.clear();
+        }
+        if (btn.textContent == 'Console Dir') {
+          console.dir(document.head);
+        }
+        if (btn.textContent == 'Console dirxml') {
+          console.dirxml(document);
+        }
+        if (btn.textContent == 'Console Group Start') {
+          const label = 'FirstNum SecondNum Output';
+          console.group(label);
+          console.log(firstNum);
+          console.log(secondNum);
+          console.log(output.value);
+        }
+        if (btn.textContent == 'Console Group End') {
+          const label = 'FirstNum SecondNum Output';
+          console.groupEnd(label);
+        }
+        if (btn.textContent == 'Console Table') {
+          console.table([
+            {
+              number: firstNum
+            },
+            {
+              operation: operator
+            },
+            {
+              number: secondNum
+            }
+          ]);
+        }
+        if (btn.textContent == 'Start Timer') {
+          console.time();
+        }
+        if (btn.textContent == 'End Timer') {
+          console.timeEnd();
+        }
+        if (btn.textContent == 'Console Trace') {
+          const first = () => { 
+            console.log('First Number: ' + firstNum);
+            second(); 
+          };
+          const second = () => { 
+            console.log('Operation: ' + operator);
+            third(); 
+          };
+          const third = () => { 
+            console.log('Second Number: ' + secondNum);
+            fourth(); 
+          };
+          const fourth = () => { 
+            console.log('Output: ' + output.value);
+            console.trace(); 
+          };
+          first();
+        }
+        if (btn.textContent == 'Trigger a Global Error') {
+          
+        }
+      });
+    });
+    class DivideByZeroError extends Error {
+      constructor(message) {
+        super(message);
+        this.name = this.constructor.name;
+      }
+    }
   </script>
+
 </body>
 
 </html>
